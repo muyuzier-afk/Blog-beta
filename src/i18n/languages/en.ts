@@ -67,7 +67,7 @@ export const en: Translation = {
 	[Key.active]: "Active",
 	[Key.idle]: "Idle",
 	[Key.avatar]: "Avatar",
-	[Key.defaultBio]: "Ad Astra Per Aspera",
+	[Key.defaultBio]: "优秀的公司赚取利润，伟大的公司赢得人心！",
 	[Key.brandLabel]: "Rhine Lab Pioneer Division",
 	[Key.footerLabel]: "Field Report Archive",
 	[Key.recordsIndexed]: "Records Indexed",

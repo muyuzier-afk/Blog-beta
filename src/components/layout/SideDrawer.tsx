@@ -119,7 +119,7 @@ export const SideDrawer = ({
 					</div>
 				<div className="px-4 mt-4">
 					<p className="font-cn text-[12px] text-lt-ghost leading-relaxed">
-						{authorBio || "Ad Astra Per Aspera"}
+						{authorBio || "优秀的公司赚取利润，伟大的公司赢得人心！"}
 					</p>
 				</div>
 				</div>
