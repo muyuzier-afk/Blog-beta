@@ -64,6 +64,7 @@ const cfg = yaml as {
 export const siteConfig: SiteConfig = {
 	title: cfg.site.title,
 	subtitle: cfg.site.subtitle,
+	url: cfg.site.url,
 	lang: cfg.site.lang,
 	banner: {
 		enable: true,

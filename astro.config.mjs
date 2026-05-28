@@ -29,7 +29,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 const isCI = true;
 
 export default defineConfig({
-    site: "https://lonetrail.vercel.app",
+    site: "https://moehans.com",
     base: "/",
     trailingSlash: "always",
     prefetch: true,
@@ -63,7 +63,7 @@ export default defineConfig({
         },
     ],
     image: {
-        domains: ["xice.cx", "blog.chongxi.us", "chongxi.us"],
+        domains: ["moehans.com", "www.moehans.com"],
         format: ["avif", "webp"],
         service: isCI
             ? { entrypoint: "astro/assets/services/sharp" }
