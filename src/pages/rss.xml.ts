@@ -15,7 +15,7 @@ function stripInvalidXmlChars(str: string): string {
 }
 export async function GET(context: APIContext): Promise<Response> {
 	const blog = await getSortedPosts();
-	const site = context.site?.toString() || "https://your-site.com/";
+	const site = context.site?.toString() || "https://moehans.com/";
 	return rss({
 		title: siteConfig.title,
 		description: siteConfig.subtitle || "No description",

@@ -2,6 +2,7 @@ import Button from "../ui/Button";
 import { StripeFooter } from "../ui/StripeFooter";
 import { i18n } from "../../i18n/translation";
 import I18nKey from "../../i18n/i18nKey";
+import { siteYaml } from "../../config";
 
 interface CopyrightCardProps {
 	title: string;
@@ -51,7 +52,7 @@ export const CopyrightCard = ({ title, published }: CopyrightCardProps) => {
 				</h3>
 				<div className="space-y-3">
 					<p className="font-mono text-[11px] text-lt-muted uppercase tracking-widest">
-						{i18n(I18nKey.author)}: <span className="text-lt-ink font-bold">CHONGXI</span>
+						{i18n(I18nKey.author)}: <span className="text-lt-ink font-bold">{siteYaml.copyright?.text || siteYaml.profile.name}</span>
 						{i18n(I18nKey.publishedAt)}: {dateStr}
 					</p>
 					<p className="font-cn text-[14px] text-lt-muted leading-relaxed max-w-2xl">

@@ -13,7 +13,7 @@ const parser = new MarkdownIt({
 });
 export async function GET(context: APIContext): Promise<Response> {
 	const blog = await getSortedPosts();
-	const site = context.site?.toString() || "https://your-site.com/";
+	const site = context.site?.toString() || "https://moehans.com/";
 	const feed = new Feed({
 		title: siteConfig.title,
 		description: siteConfig.subtitle,
