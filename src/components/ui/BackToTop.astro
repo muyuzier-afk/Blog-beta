@@ -1,0 +1,52 @@
+---
+---
+
+<button
+	id="back-to-top"
+	class="fixed bottom-8 right-8 w-10 h-10 bg-lt-ink text-lt-bg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-lt-accent active:scale-95 z-[9998]"
+	aria-label="Back to top"
+>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+		<path d="M12 19V5M5 12l7-7 7 7"/>
+	</svg>
+</button>
+
+<script is:inline>
+	function initBackToTop() {
+		const button = document.getElementById('back-to-top');
+		if (!button) return;
+
+		const toggleVisibility = () => {
+			if (window.scrollY > 300) {
+				button.classList.remove('opacity-0', 'invisible');
+				button.classList.add('opacity-100', 'visible');
+			} else {
+				button.classList.remove('opacity-100', 'visible');
+				button.classList.add('opacity-0', 'invisible');
+			}
+		};
+
+		const scrollToTop = () => {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		};
+
+		window.addEventListener('scroll', toggleVisibility, { passive: true });
+		button.addEventListener('click', scrollToTop);
+
+		toggleVisibility();
+
+		document.addEventListener('astro:page-load', () => {
+			window.removeEventListener('scroll', toggleVisibility);
+			button.removeEventListener('click', scrollToTop);
+		});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initBackToTop);
+	} else {
+		initBackToTop();
+	}
+</script>

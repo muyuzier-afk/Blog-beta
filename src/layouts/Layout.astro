@@ -11,6 +11,7 @@ import { ClientRouter } from "astro:transitions";
 import ConfigCarrier from "@components/layout/ConfigCarrier.astro";
 import { SideDrawer } from "@components/layout/SideDrawer";
 import Footer from "@components/layout/Footer.astro";
+import BackToTop from "@components/ui/BackToTop.astro";
 import { navBarConfig, profileConfig, siteConfig } from "@/config";
 import { i18n } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
@@ -156,6 +157,17 @@ jsonLd["@graph"].push({
 				// Force light mode
 				document.documentElement.classList.remove('dark');
 				localStorage.setItem('theme', 'light');
+				
+				// Detect and apply preferred language
+				const stored = localStorage.getItem('preferred_locale');
+				if (stored) {
+					document.documentElement.lang = stored.replace('_', '-');
+				} else {
+					const browserLang = navigator.language || navigator.userLanguage;
+					if (browserLang && browserLang.toLowerCase().startsWith('zh')) {
+						document.documentElement.lang = 'zh-CN';
+					}
+				}
 			})();
 		</script>
 		<title>{pageTitle}</title>
@@ -297,6 +309,7 @@ jsonLd["@graph"].push({
                                                     <slot />
                                                     <PostHog />
                                                     <Footer />
+                                                    <BackToTop />
                                                 </div>
                                             </div>
 	</body></html>

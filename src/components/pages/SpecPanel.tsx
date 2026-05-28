@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { getPostUrlBySlug } from "../../utils/url-utils";
 import Button from "../ui/Button";
-import { RpStamp } from "../ui/RpStamp";
 import { StripeFooter } from "../ui/StripeFooter";
 
 interface Post {
@@ -115,21 +114,6 @@ export default function SpecPanel({ sortedPosts, sortOrder = "desc" }: Props) {
 						</p>
 					</div>
 				)}
-			</div>
-
-			<div className="relative z-10 mt-20 pt-8 border-t border-lt-ink flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
-				<div className="flex items-center gap-4">
-					<div className="scale-90 origin-left">
-						<RpStamp />
-					</div>
-					<div className="text-[10px] font-mono text-lt-ghost leading-none uppercase tracking-tighter text-center md:text-left">
-						Rhine Lab Spec Division
-						<br />
-						Dossier_Verified
-						{(new Date().getMonth() + 1).toString().padStart(2, "0")}
-					</div>
-				</div>
-				<span className="text-[10px] font-mono text-lt-ghost uppercase tracking-widest italic" />
 			</div>
 
 			<StripeFooter />

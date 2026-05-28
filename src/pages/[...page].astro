@@ -27,7 +27,6 @@ const navItems = [
 	{ label: "Home", href: "/" },
 	{ label: "Archive", href: "/archive" },
 	{ label: "Friends", href: "/links" },
-	{ label: "About", href: "/about" },
 ];
 ---
 
@@ -46,7 +45,7 @@ const navItems = [
 				title={entry.data.title}
 				category={entry.data.category}
 				published={entry.data.published}
-				url={`/posts/${entry.slug}`}
+				url={`/posts/${entry.slug}/`}
 				description={entry.data.description}
 				index={index + page.start}
 			/>
@@ -65,9 +64,8 @@ const navItems = [
 			slogan={profileConfig.bio ?? ""}
 			avatarSrc={profileConfig.avatar}
 			links={[
-				{ label: "GH", href: "https://github.com/ChongxiSama/Lonetrail" },
-				{ label: "TG", href: "https://t.me/CEPATECH" },
-				{ label: "BI", href: "https://m.bilibili.com/space/500042199" }
+				{ label: "GitHub", href: "https://github.com/muyuzier-afk", icon: "mdi:github" },
+				{ label: "Gitee", href: "https://gitee.com/muyuzier-afk", icon: "simple-icons:gitee" }
 			]}
 		/>
 	</div>

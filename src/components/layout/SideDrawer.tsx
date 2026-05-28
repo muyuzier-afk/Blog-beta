@@ -1,7 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { $isNavMenuOpen, setIsNavMenuOpen } from "../../store/app";
 import Button from "../ui/Button";
-import { RpStamp } from "../ui/RpStamp";
 import I18nKey from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
 
@@ -101,7 +100,7 @@ export const SideDrawer = ({
 							<a
 								href="/subscribe/"
 								className="mt-2 flex items-center gap-1.5 px-2 py-1 border border-white/10 text-lt-ghost hover:text-lt-accent hover:border-lt-accent/50 transition-all text-[9px] font-mono uppercase tracking-widest"
-								title="Follow via RSS"
+								title={i18n(I18nKey.follow) + " via RSS"}
 							>
 								<svg
 									className="w-3 h-3"
@@ -114,19 +113,15 @@ export const SideDrawer = ({
 									<path d="M4 4a16 16 0 0 1 16 16" />
 									<circle cx="5" cy="19" r="1" />
 								</svg>
-								Follow
+								{i18n(I18nKey.follow)}
 							</a>
 						</div>
 					</div>
-					<div className="px-4 mt-4">
-						<p className="font-cn text-[12px] text-lt-ghost leading-relaxed">
-							{authorBio || "Ad Astra Per Aspera"}
-							<br />
-							<span className="font-mono text-[9px] opacity-40 uppercase">
-								Subject_id: PTL-9348
-							</span>
-						</p>
-					</div>
+				<div className="px-4 mt-4">
+					<p className="font-cn text-[12px] text-lt-ghost leading-relaxed">
+						{authorBio || "Ad Astra Per Aspera"}
+					</p>
+				</div>
 				</div>
 
 				<nav className="flex-1 py-8 px-4 overflow-y-auto no-scrollbar">
@@ -154,7 +149,7 @@ export const SideDrawer = ({
 								<span
 									className={`text-[9px] font-mono ${activePath === item.href ? "text-lt-accent" : "text-white/5"} uppercase`}
 								>
-									● {activePath === item.href ? "Active" : "Idle"}
+									● {activePath === item.href ? i18n(I18nKey.active) : i18n(I18nKey.idle)}
 								</span>
 							</a>
 						))}
@@ -162,19 +157,6 @@ export const SideDrawer = ({
 				</nav>
 
 				<div className="p-8 border-t border-white/5">
-					<div className="flex items-center gap-4 mb-6">
-						<div className="scale-90">
-							<RpStamp />
-						</div>
-						<div className="flex flex-col">
-							<span className="text-[9px] font-mono text-lt-ghost uppercase tracking-tighter">
-								Rhine_Lab_Pioneer
-							</span>
-							<span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">
-								Protocol_V.4.21
-							</span>
-						</div>
-					</div>
 					<div className="h-[2px] w-full flex">
 						<div className="bg-rl-teal w-1/3" />
 						<div className="bg-rl-gold w-1/3" />

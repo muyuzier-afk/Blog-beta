@@ -1,4 +1,7 @@
 ---
+import { i18n } from "../../i18n/translation";
+import I18nKey from "../../i18n/i18nKey";
+
 interface Props {
 	nodes: Array<{ title: string; href: string }>;
 	nextPost?: { title: string; href: string; id: string };
@@ -18,7 +21,7 @@ const { nodes = [], nextPost } = Astro.props;
             <div class="flex items-center gap-2">
                 <div class="w-[3px] h-[10px] bg-lt-accent"></div>
                 <span class="text-[11px] font-mono tracking-[0.2em] font-semibold text-lt-bg uppercase">
-                    Chapter_07 // Related_Archives
+                    {i18n(I18nKey.relatedArchives)}
                 </span>
             </div>
             <div class="text-[11px] font-mono text-lt-bg/30 uppercase tracking-widest leading-none">
@@ -38,14 +41,14 @@ const { nodes = [], nextPost } = Astro.props;
                         NODE_0{(i + 1).toString().padStart(2, "0")}
                     </span>
                     <span class="text-[10px] text-lt-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                        ● ACTIVE
+                        ● {i18n(I18nKey.active)}
                     </span>
                 </div>
                 <h4 class="font-cn text-[15px] text-lt-bg/90 font-bold leading-[1.6] mb-6 group-hover:text-white transition-colors line-clamp-2">
                     {node.title}
                 </h4>
                 <span class="font-mono text-[10px] text-lt-bg/30 uppercase tracking-widest">
-                    Read_Node &gt;&gt;
+                    {i18n(I18nKey.readNode)} &gt;&gt;
                 </span>
             </a>
         ))}
@@ -62,7 +65,7 @@ const { nodes = [], nextPost } = Astro.props;
                 </span>
                 <div class="space-y-1 min-w-0">
                     <span class="block text-[9px] font-mono text-lt-accent group-hover:text-white/80 uppercase tracking-widest leading-none">
-                        Access_Next_Log
+                        {i18n(I18nKey.accessNextLog)}
                     </span>
                     <h5 class="font-cn text-[15px] md:text-[16px] text-lt-bg font-bold truncate">
                         {nextPost.title}

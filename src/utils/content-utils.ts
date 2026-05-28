@@ -16,9 +16,13 @@ async function getRawSortedPosts(filterArchived = false) {
 	const postsWithCase = allBlogPosts.map((entry: CollectionEntry<"posts">) => {
 		const parts = entry.id.split("/");
 		const filename = parts[parts.length - 1];
+		// For index.md files, use the directory name as slug
+		const slug = filename === "index" && parts.length > 1
+			? parts[parts.length - 2]
+			: filename;
 		return {
 			...entry,
-			slug: filename,
+			slug,
 		};
 	});
 	const sorted = postsWithCase.sort((a: any, b: any) => {

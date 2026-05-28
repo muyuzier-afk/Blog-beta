@@ -1,0 +1,199 @@
+---
+import { siteConfig } from "../config";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import Layout from "../layouts/Layout.astro";
+import { getSortedPosts } from "../utils/content-utils";
+
+const sortedPosts = await getSortedPosts();
+
+const searchLabel = i18n(I18nKey.search);
+const pageTitle = `${searchLabel} - ${siteConfig.title}`;
+const metaDescription = `${siteConfig.title} ${searchLabel}`;
+---
+
+<Layout title={pageTitle} description={metaDescription}>
+	<div class="py-12 md:py-16 flex flex-col items-center gap-0 overflow-x-hidden pt-14">
+		<div class="relative w-full max-w-[840px] bg-lt-bg paper-texture shadow-2xl px-6 md:px-16 py-10 overflow-hidden border-b border-lt-border/10">
+			<div class="relative z-10 flex justify-between items-end">
+				<div class="space-y-1">
+					<div class="flex items-center gap-2">
+						<div class="w-[3px] h-[10px] bg-lt-accent"></div>
+						<span class="text-[11px] font-mono tracking-[0.2em] font-bold text-lt-ink uppercase">
+							Chapter_Search
+						</span>
+					</div>
+					<h1 class="font-display text-4xl md:text-6xl tracking-tighter uppercase text-lt-ink">
+						{searchLabel}
+					</h1>
+				</div>
+				<div class="text-right hidden sm:block">
+					<span class="text-[11px] font-mono text-lt-ghost uppercase tracking-widest">
+						{sortedPosts.length} {i18n(I18nKey.recordsIndexed)}
+					</span>
+				</div>
+			</div>
+			<div class="absolute bottom-0 left-0 right-0 h-[3px] flex opacity-30">
+				<div class="bg-rl-teal w-1/3"></div>
+				<div class="bg-rl-gold w-1/3"></div>
+				<div class="bg-rl-red w-1/3"></div>
+			</div>
+		</div>
+
+		<div class="relative w-full max-w-[840px] bg-lt-bg paper-texture shadow-2xl px-6 md:px-16 py-12 overflow-hidden">
+			<div class="relative z-10">
+				<div class="mb-8">
+					<input
+						type="text"
+						id="search-input"
+						placeholder={i18n(I18nKey.search) + "..."}
+						class="w-full px-4 py-3 bg-lt-surface border border-lt-border/30 text-lt-ink placeholder:text-lt-ghost focus:outline-none focus:border-lt-accent transition-colors font-mono text-sm"
+						autocomplete="off"
+					/>
+				</div>
+
+				<div id="search-results" class="space-y-0"></div>
+
+				<div id="empty-state" class="py-12 text-center">
+					<p class="font-mono text-[11px] text-lt-ghost italic">
+						{i18n(I18nKey.searchPlaceholder)}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script is:inline define:vars={{ posts: sortedPosts }}>
+	const searchInput = document.getElementById('search-input');
+	const searchResults = document.getElementById('search-results');
+	const emptyState = document.getElementById('empty-state');
+
+	const searchIndex = posts.map(post => ({
+		slug: post.slug,
+		title: post.data.title || '',
+		description: post.data.description || '',
+		tags: post.data.tags || [],
+		category: post.data.category || '',
+		published: post.data.published,
+	}));
+
+	function performSearch(query) {
+		if (!query || query.length < 2) {
+			searchResults.innerHTML = '';
+			emptyState.style.display = 'block';
+			return;
+		}
+
+		const normalizedQuery = query.toLowerCase();
+		const results = searchIndex.filter(post => {
+			const titleMatch = post.title.toLowerCase().includes(normalizedQuery);
+			const descMatch = post.description.toLowerCase().includes(normalizedQuery);
+			const tagMatch = post.tags.some(tag => tag.toLowerCase().includes(normalizedQuery));
+			const catMatch = post.category.toLowerCase().includes(normalizedQuery);
+			return titleMatch || descMatch || tagMatch || catMatch;
+		});
+
+		displayResults(results, query);
+	}
+
+	function displayResults(results, query) {
+		if (results.length === 0) {
+			searchResults.innerHTML = '';
+			emptyState.style.display = 'block';
+			emptyState.innerHTML = `
+				<p class="font-mono text-[11px] text-lt-ghost italic">
+					No results found for "${escapeHtml(query)}"
+				</p>
+			`;
+			return;
+		}
+
+		emptyState.style.display = 'none';
+
+		const html = results.map((post, index) => {
+			const date = new Date(post.published);
+			const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+			const year = date.getFullYear();
+
+			return `
+				<a href="/posts/${post.slug}/"
+				   class="group flex items-center justify-between py-4 border-b border-lt-border/40 hover:bg-lt-surface -mx-4 px-4 transition-all duration-150 search-result"
+				   style="--delay: ${index * 0.05}s">
+					<div class="flex items-center gap-6 flex-1 min-w-0">
+						<span class="font-mono text-[11px] text-lt-ghost font-bold whitespace-nowrap">
+							${formattedDate}
+						</span>
+						<div class="flex-1 min-w-0">
+							<h3 class="font-cn text-[15px] text-lt-ink font-bold truncate group-hover:text-lt-accent transition-colors">
+								${highlightMatch(escapeHtml(post.title), query)}
+							</h3>
+							${post.description ? `<p class="text-[12px] text-lt-ghost mt-1 truncate">${highlightMatch(escapeHtml(post.description), query)}</p>` : ''}
+						</div>
+					</div>
+					<span class="text-lt-ghost font-display text-xl group-hover:text-lt-ink transition-colors ml-4 shrink-0">
+						→
+					</span>
+				</a>
+			`;
+		}).join('');
+
+		searchResults.innerHTML = `
+			<div class="mb-4">
+				<span class="font-mono text-[10px] text-lt-ghost uppercase tracking-widest">
+					${results.length} Results Found
+				</span>
+			</div>
+			${html}
+		`;
+	}
+
+	function escapeHtml(text) {
+		const div = document.createElement('div');
+		div.textContent = text;
+		return div.innerHTML;
+	}
+
+	function highlightMatch(text, query) {
+		if (!text) return '';
+		const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+		return text.replace(regex, '<mark class="bg-lt-accent/20 text-lt-ink px-0.5">$1</mark>');
+	}
+
+	function escapeRegex(string) {
+		return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	}
+
+	function debounce(func, wait) {
+		let timeout;
+		return function executedFunction(...args) {
+			const later = () => {
+				clearTimeout(timeout);
+				func(...args);
+			};
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+		};
+	}
+
+	const debouncedSearch = debounce((e) => performSearch(e.target.value), 200);
+
+	searchInput.addEventListener('input', debouncedSearch);
+	searchInput.focus();
+</script>
+
+<style>
+	.search-result {
+		opacity: 0;
+		transform: translateY(10px);
+		animation: fadeUp 0.3s ease forwards;
+		animation-delay: var(--delay, 0s);
+	}
+
+	@keyframes fadeUp {
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>

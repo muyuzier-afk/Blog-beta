@@ -182,6 +182,9 @@ export default defineConfig({
         ],
     },
     vite: {
+        server: {
+            allowedHosts: ['.monkeycode-ai.online'],
+        },
         plugins: [
             yaml(),
         ],

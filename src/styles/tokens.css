@@ -61,6 +61,8 @@
 :root {
   --font-sans: var(--font-sans-pj), system-ui, -apple-system, "PingFang SC", "HarmonyOS Sans SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --font-novecento: "Novecento Sans Wide", system-ui, sans-serif;
+  --font-mono: "Fira Code", "Fira Code Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
 
 @font-face {
   font-family: "Novecento Sans Wide";
@@ -82,8 +84,6 @@
   font-weight: 600;
   font-style: normal;
   font-display: swap;
-}
-  --font-mono: "Fira Code", "Fira Code Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @tailwind base;

@@ -1,0 +1,48 @@
+---
+interface Props {
+	target?: string;
+}
+
+const { target = "article" } = Astro.props;
+---
+
+<div id="reading-progress" class="fixed top-0 left-0 w-full h-[3px] z-[9999] pointer-events-none">
+	<div class="h-full bg-lt-accent transition-[width] duration-100 ease-out" style="width: 0%"></div>
+</div>
+
+<script is:inline define:vars={{ target }}>
+	function initReadingProgress() {
+		const progressBar = document.querySelector('#reading-progress > div');
+		if (!progressBar) return;
+
+		const article = document.querySelector(target);
+		if (!article) return;
+
+		const updateProgress = () => {
+			const articleRect = article.getBoundingClientRect();
+			const articleTop = articleRect.top + window.scrollY;
+			const articleHeight = articleRect.height;
+			const windowHeight = window.innerHeight;
+			const scrollY = window.scrollY;
+
+			const start = articleTop;
+			const end = articleTop + articleHeight - windowHeight;
+			const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+
+			progressBar.style.width = `${progress * 100}%`;
+		};
+
+		window.addEventListener('scroll', updateProgress, { passive: true });
+		updateProgress();
+
+		document.addEventListener('astro:page-load', () => {
+			window.removeEventListener('scroll', updateProgress);
+		});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initReadingProgress);
+	} else {
+		initReadingProgress();
+	}
+</script>

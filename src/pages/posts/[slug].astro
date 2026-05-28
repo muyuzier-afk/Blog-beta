@@ -12,6 +12,8 @@ import PostHog from "../../components/posthog.astro";
 import { profileConfig, siteConfig } from "../../config";
 import Layout from "../../layouts/Layout.astro";
 import { getRelatedPosts, getSortedPosts } from "../../utils/content-utils";
+import ReadingProgress from "../../components/ui/ReadingProgress.astro";
+import ShareButtons from "../../components/ui/ShareButtons.astro";
 import "../../styles/tokens.css";
 import "../../styles/markdown.css";
 import "../../styles/expressive-code.css";
@@ -31,7 +33,7 @@ const { Content } = await render(entry);
 const relatedNodes = await getRelatedPosts(entry, 3);
 const relatedPosts = relatedNodes.map((p) => ({
 	title: p.data.title,
-	href: `/posts/${p.slug}`,
+	href: `/posts/${p.slug}/`,
 }));
 
 const currentIndex = posts.findIndex((p) => p.slug === entry.slug);
@@ -41,7 +43,6 @@ const navItems = [
 	{ label: "Home", href: "/" },
 	{ label: "Archive", href: "/archive" },
 	{ label: "Friends", href: "/links" },
-	{ label: "About", href: "/about" },
 ];
 
 const pageTitle = `${entry.data.title} - ${siteConfig.title}`;
@@ -52,6 +53,7 @@ const metaDescription = entry.data.description
 	: siteConfig.subtitle;
 ---
 <Layout title={pageTitle} description={metaDescription}>
+	<ReadingProgress target="article" />
 	<div class="flex flex-col items-center gap-0 pt-14 overflow-x-hidden">
 
 		<PostHero
@@ -67,7 +69,7 @@ const metaDescription = entry.data.description
 			{entry.data.description && (
 				<div class="relative z-10 flex mb-12 md:mb-16 bg-lt-surface border-l-[3px] border-lt-accent px-5 py-4">
 					<p class="font-cn text-[15px] leading-[1.8] font-bold text-lt-ink">
-						TL;DR：{entry.data.description}
+						{i18n(I18nKey.tldr)}：{entry.data.description}
 					</p>
 				</div>
 			)}
@@ -76,23 +78,22 @@ const metaDescription = entry.data.description
 				<Content />
 			</div>
 
-			<div class="relative z-10 mt-20 pt-8 border-t border-lt-ink flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
-				<div class="flex items-center gap-4">
-					<div class="inline-flex border-[1.5px] border-lt-ink p-[1px] bg-white leading-none">
-						<span class="px-1 text-[14px] font-[900] italic text-lt-ink">R</span>
-						<span class="bg-rl-red text-white px-1.5 text-[14px] font-[900] italic">P</span>
-					</div>
-					<div class="font-mono text-[10px] md:text-[11px] text-lt-ghost leading-tight uppercase tracking-tighter text-center md:text-left">
-						Rhine Lab Pioneer Division<br/>Auth_Verified: {entry.data.published.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')}
-					</div>
-				</div>
-				<span class="font-mono text-[10px] md:text-[11px] text-lt-ghost uppercase tracking-[0.6em] font-black">// END OF POST</span>
+			<div class="relative z-10 mt-20 pt-8 border-t border-lt-ink flex justify-end items-center md:items-end">
+				<span class="font-mono text-[10px] md:text-[11px] text-lt-ghost uppercase tracking-[0.6em] font-black">// {i18n(I18nKey.endOfPost)}</span>
 			</div>
 
 			<div class="absolute bottom-0 left-0 right-0 h-[3px] flex">
 				<div class="bg-rl-teal w-1/3"></div><div class="bg-rl-gold w-1/3"></div><div class="bg-rl-red w-1/3"></div>
 			</div>
 		</article>
+
+		<div class="relative w-full max-w-[840px] bg-lt-bg paper-texture shadow-2xl px-6 md:px-16 py-6 border-t border-lt-border/10">
+			<ShareButtons
+				title={entry.data.title}
+				url={`${siteConfig.url}/posts/${entry.slug}/`}
+				description={entry.data.description}
+			/>
+		</div>
 
 
 		<div class="relative w-full max-w-[840px] bg-lt-bg paper-texture shadow-2xl px-6 md:px-16 py-8 border-t border-lt-border/10 group">
@@ -111,7 +112,7 @@ const metaDescription = entry.data.description
 					href="/subscribe/"
 					class="shrink-0 px-5 py-2.5 border border-lt-ink font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-lt-ink hover:bg-lt-ink hover:text-lt-bg transition-colors duration-150"
 				>
-					Follow
+					{i18n(I18nKey.follow)}
 				</a>
 			</div>
 		</div>
@@ -129,7 +130,7 @@ const metaDescription = entry.data.description
 			nodes={relatedPosts}
 			nextPost={nextPost ? {
 				title: nextPost.data.title,
-				href: `/posts/${nextPost.slug}`,
+				href: `/posts/${nextPost.slug}/`,
 				id: `PTL-${nextPost.slug.toUpperCase().slice(0, 4)}`
 			} : undefined}
 		/>

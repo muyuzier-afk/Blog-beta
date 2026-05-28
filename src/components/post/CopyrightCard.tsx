@@ -1,5 +1,7 @@
 import Button from "../ui/Button";
 import { StripeFooter } from "../ui/StripeFooter";
+import { i18n } from "../../i18n/translation";
+import I18nKey from "../../i18n/i18nKey";
 
 interface CopyrightCardProps {
 	title: string;
@@ -18,7 +20,7 @@ export const CopyrightCard = ({ title, published }: CopyrightCardProps) => {
 
 	const copyInfo = () => {
 		const text = `${title}\n${dateStr}\nCC BY-NC-SA 4.0`;
-		navigator.clipboard.writeText(text).then(() => alert("Copied"));
+		navigator.clipboard.writeText(text).then(() => alert(i18n(I18nKey.copied)));
 	};
 
 	return (
@@ -38,7 +40,7 @@ export const CopyrightCard = ({ title, published }: CopyrightCardProps) => {
 						</span>
 					</div>
 					<div className="text-[11px] font-mono text-lt-ghost uppercase tracking-widest leading-none">
-						Protocol_Ref: CC-BY-NC-SA-4.0
+						{i18n(I18nKey.protocol)}_Ref: CC-BY-NC-SA-4.0
 					</div>
 				</div>
 			</div>
@@ -49,11 +51,11 @@ export const CopyrightCard = ({ title, published }: CopyrightCardProps) => {
 				</h3>
 				<div className="space-y-3">
 					<p className="font-mono text-[11px] text-lt-muted uppercase tracking-widest">
-						Author: <span className="text-lt-ink font-bold">CHONGXI</span>
-						Released: {dateStr}
+						{i18n(I18nKey.author)}: <span className="text-lt-ink font-bold">CHONGXI</span>
+						{i18n(I18nKey.publishedAt)}: {dateStr}
 					</p>
 					<p className="font-cn text-[14px] text-lt-muted leading-relaxed max-w-2xl">
-						Licensed under{" "}
+						{i18n(I18nKey.license)}{" "}
 						<span className="text-lt-ink font-bold">
 							CC BY-NC-SA 4.0
 						</span>

@@ -1,0 +1,131 @@
+---
+interface Props {
+	variant?: "card" | "list" | "text" | "title";
+	count?: number;
+}
+
+const { variant = "card", count = 1 } = Astro.props;
+---
+
+<div class={`skeleton skeleton-${variant}`} aria-hidden="true">
+	{Array.from({ length: count }).map(() => (
+		<div class="skeleton-item">
+			{variant === "card" && (
+				<>
+					<div class="skeleton-header">
+						<div class="skeleton-title"></div>
+						<div class="skeleton-meta"></div>
+					</div>
+					<div class="skeleton-content">
+						<div class="skeleton-line"></div>
+						<div class="skeleton-line short"></div>
+					</div>
+				</>
+			)}
+			{variant === "list" && (
+				<div class="flex items-center gap-6 py-4 border-b border-lt-border/40">
+					<div class="skeleton-meta w-[60px]"></div>
+					<div class="flex-1">
+						<div class="skeleton-title"></div>
+					</div>
+				</div>
+			)}
+			{variant === "title" && <div class="skeleton-title"></div>}
+			{variant === "text" && (
+				<>
+					<div class="skeleton-line"></div>
+					<div class="skeleton-line"></div>
+					<div class="skeleton-line short"></div>
+				</>
+			)}
+		</div>
+	))}
+</div>
+
+<style>
+	.skeleton {
+		width: 100%;
+	}
+
+	.skeleton-item {
+		margin-bottom: 1rem;
+	}
+
+	.skeleton-header {
+		margin-bottom: 1rem;
+	}
+
+	.skeleton-title {
+		height: 1.5rem;
+		width: 70%;
+		background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-shine) 50%, var(--skeleton-bg) 75%);
+		background-size: 200% 100%;
+		border-radius: 2px;
+		margin-bottom: 0.5rem;
+		animation: shimmer 1.5s infinite;
+	}
+
+	.skeleton-meta {
+		height: 0.8rem;
+		width: 120px;
+		background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-shine) 50%, var(--skeleton-bg) 75%);
+		background-size: 200% 100%;
+		border-radius: 2px;
+		animation: shimmer 1.5s infinite 0.1s;
+	}
+
+	.skeleton-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.skeleton-line {
+		height: 1rem;
+		width: 100%;
+		background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-shine) 50%, var(--skeleton-bg) 75%);
+		background-size: 200% 100%;
+		border-radius: 2px;
+		animation: shimmer 1.5s infinite;
+	}
+
+	.skeleton-line.short {
+		width: 60%;
+	}
+
+	.skeleton-line:nth-child(2) {
+		animation-delay: 0.1s;
+	}
+
+	.skeleton-line:nth-child(3) {
+		animation-delay: 0.2s;
+	}
+
+	:root {
+		--skeleton-bg: var(--lt-surface, #e8e8e8);
+		--skeleton-shine: var(--lt-bg, #f0f0f0);
+	}
+
+	:global(.dark) {
+		--skeleton-bg: #2a2a2a;
+		--skeleton-shine: #333333;
+	}
+
+	@keyframes shimmer {
+		0% {
+			background-position: 200% 0;
+		}
+		100% {
+			background-position: -200% 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.skeleton-title,
+		.skeleton-meta,
+		.skeleton-line {
+			animation: none;
+			background: var(--skeleton-bg);
+		}
+	}
+</style>

@@ -1,6 +1,13 @@
 ---
 import { copyrightConfig } from "../../config";
+import LanguageSwitcher from "../ui/LanguageSwitcher.astro";
+import { i18n } from "../../i18n/translation";
+import I18nKey from "../../i18n/i18nKey";
+
+const buildTime = new Date().toISOString();
+const renderStart = Date.now();
 ---
+
 <div class="relative w-full max-w-[840px] bg-lt-ink paper-texture shadow-2xl px-6 md:px-16 py-12 overflow-hidden mx-auto -mt-12 md:-mt-16">
     <!-- Background image -->
     <div class="absolute inset-0 z-0">
@@ -18,12 +25,19 @@ import { copyrightConfig } from "../../config";
     <div class="relative z-10">
         <div class="text-sm text-right text-lt-bg/60 font-display">
             &copy; {copyrightConfig.startYear}-{copyrightConfig.endYear} <span class="text-lt-accent">{copyrightConfig.siteName}</span><br>
-            <span class="opacity-50">Powered by</span>
+            <span class="opacity-50">{i18n(I18nKey.poweredBy)}</span>
             <a class="transition link text-lt-accent font-medium hover:underline" target="_blank" href="https://astro.build">Astro</a>
             <span class="opacity-50">&amp;</span>
-            <a class="transition link text-lt-accent font-medium hover:underline" target="_blank" href="https://github.com/ChongxiSama/Lonetrail">Lonetrail</a>
+            <a class="transition link text-lt-accent font-medium hover:underline" target="_blank" href="https://github.com/ChongxiSama/Lonetrail">MOEHANS BLOG</a>
 
-            <span class="text-[0.65rem] opacity-30 mt-3 block uppercase tracking-widest">Non-Collaborative_Entity // Protocol_V.4.21</span>
+            <div class="mt-3 flex items-center justify-end gap-4">
+                <div class="text-[0.6rem] opacity-25 font-mono space-y-0.5">
+                    <div>Build: {buildTime}</div>
+                    <div>Render: {Date.now() - renderStart}ms</div>
+                    <div>{i18n(I18nKey.protocol)}: V.4.21</div>
+                </div>
+                <LanguageSwitcher />
+            </div>
         </div>
     </div>
 </div>

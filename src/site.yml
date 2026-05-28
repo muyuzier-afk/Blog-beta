@@ -1,66 +1,49 @@
 site:
-  title: "Lonetrail"
-  subtitle: "Ad Astra Per Aspera"
-  url: "https://lonetrail.vercel.app"
-  lang: "en"
-  author: "Chongxi"
-  email: "qwq@chongxi.us"
-  favicon: "/images/favicon.webp"
-  banner: ""
+  title: "MOEHANS BLOG"
+  subtitle: "Share AI, Serverless, and Cloud Native"
+  url: "https://moehans.com"
+  lang: "zh_CN"
+  author: "MOEHANS"
+  email: "muyuzier@gmail.com"
+  favicon: "/images/moehans-favicon.webp"
   og_image: "/images/og.webp"
 
 profile:
-  avatar: "/images/chongxi-avatar.webp"
-  name: "Chongxi"
-  bio: "Ad Astra Per Aspera"
+  avatar: "/images/moehans-avatar.webp"
+  name: "MOEHANS"
+  bio: "优秀的公司赚取利润，伟大的公司赢得人心！"
   links:
     - name: "GitHub"
-      url: "https://github.com/ChongxiSama/Lonetrail"
-    - name: "Docs"
-      url: "https://github.com/ChongxiSama/Lonetrail#readme"
-    - name: "主题目录"
-      url: "https://astro.build/themes/"
+      url: "https://github.com/muyuzier-afk"
+    - name: "Gitee"
+      url: "https://gitee.com/muyuzier-afk"
+    - name: "Email"
+      url: "mailto:muyuzier@gmail.com"
 
 nav:
   - Home: "/"
   - Archive: "/archive/"
+  - Search: "/search/"
   - Series: "/seri/"
   - Links: "/links/"
-  - About: "/about/"
 
 features:
-  breadcrumb: true
-  comments: true
-  search: false
-  donate: false
+  comments: false
+  search: true
   rss_feed: true
-  sitemap: true
   related_posts: true
   series: true
-  license: true
 
 seo:
-  enable_json_ld: false
-  breadcrumb: true
-  keywords: "astro, theme, blog, lonetrail"
-  same_as: []
-
-services:
-  posthog:
-    api_key: ""
-    api_host: "https://app.posthog.com"
-  webmention:
-    url: ""
-  blogsclub:
-    badge_url: ""
-  issue_tracker:
-    url: ""
-
-trusted_domains:
-  - "lonetrail.vercel.app"
+  keywords: "astro, theme, blog, lonetrail, arknights"
 
 copyright:
-  text: "Lonetrail Demo"
-  site_name: "Lonetrail"
-  license: "MIT"
-  license_url: "https://opensource.org/licenses/MIT"
+  site_name: "MOEHANS BLOG"
+  license: "CC BY-NC-SA 4.0"
+  license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+
+trusted_domains:
+  - "www.moehans.com"
+  - "moehans.com"
+  - "github.com"
+  - "gitee.com"

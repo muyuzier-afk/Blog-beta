@@ -1,6 +1,7 @@
 ---
-import RpStamp from "./RpStamp.astro";
 import StripeFooter from "./StripeFooter.astro";
+import { i18n } from "../../i18n/translation";
+import I18nKey from "../../i18n/i18nKey";
 
 interface Props {
 	currentPage: number;
@@ -16,8 +17,8 @@ const {
 	totalPages,
 	prevHref,
 	nextHref,
-	brandLabel = "Rhine Lab Pioneer Division",
-	footerLabel = "Field Report Archive",
+	brandLabel = i18n(I18nKey.brandLabel),
+	footerLabel = i18n(I18nKey.footerLabel),
 } = Astro.props;
 ---
 <div class="relative w-full max-w-[840px] bg-lt-bg paper-texture shadow-2xl px-8 sm:px-16 py-10 overflow-hidden">
@@ -27,11 +28,11 @@ const {
                 href={prevHref}
                 class="font-mono text-[11px] font-bold text-lt-ink uppercase tracking-widest hover:text-lt-accent transition-colors"
             >
-                ← Prev
+                ← {i18n(I18nKey.previous)}
             </a>
         ) : (
             <span class="font-mono text-[11px] font-bold text-lt-ghost uppercase tracking-widest cursor-not-allowed">
-                ← Prev
+                ← {i18n(I18nKey.previous)}
             </span>
         )}
 
@@ -57,26 +58,18 @@ const {
                 href={nextHref}
                 class="font-mono text-[11px] font-bold text-lt-ink uppercase tracking-widest hover:text-lt-accent transition-colors"
             >
-                Next →
+                {i18n(I18nKey.next)} →
             </a>
         ) : (
             <span class="font-mono text-[11px] font-bold text-lt-ghost uppercase tracking-widest cursor-not-allowed">
-                Next →
+                {i18n(I18nKey.next)} →
             </span>
         )}
     </div>
 
-    <div class="relative z-10 mt-10 pt-8 border-t border-lt-ink flex justify-between items-end">
-        <div class="flex items-center gap-4">
-            <RpStamp />
-            <div class="font-mono text-[11px] text-lt-ghost leading-none uppercase tracking-tighter text-center md:text-left">
-                {brandLabel}
-                <br />
-                {footerLabel}
-            </div>
-        </div>
+    <div class="relative z-10 mt-10 pt-8 border-t border-lt-ink flex justify-end items-end">
         <span class="font-mono text-[11px] text-lt-ghost uppercase tracking-widest">
-            // End of Index
+            // {i18n(I18nKey.endOfPost)}
         </span>
     </div>
 

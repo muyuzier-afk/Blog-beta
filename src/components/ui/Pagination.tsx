@@ -1,4 +1,3 @@
-import { RpStamp } from "./RpStamp";
 import { StripeFooter } from "./StripeFooter";
 
 interface PaginationProps {
@@ -6,8 +5,6 @@ interface PaginationProps {
 	totalPages: number;
 	prevHref?: string;
 	nextHref?: string;
-	brandLabel?: string;
-	footerLabel?: string;
 }
 
 export const Pagination = ({
@@ -15,8 +12,6 @@ export const Pagination = ({
 	totalPages,
 	prevHref,
 	nextHref,
-	brandLabel = "Rhine Lab Pioneer Division",
-	footerLabel = "Field Report Archive",
 }: PaginationProps) => {
 	return (
 		<div className="relative w-full max-w-[840px] bg-lt-bg paper-texture shadow-2xl px-8 sm:px-16 py-10 overflow-hidden">
@@ -61,18 +56,6 @@ export const Pagination = ({
 						Next →
 					</span>
 				)}
-			</div>
-
-			<div className="relative z-10 mt-10 pt-8 border-t border-lt-ink flex justify-between items-end">
-				<div className="flex items-center gap-4">
-					<RpStamp />
-					<div className="font-mono text-[11px] text-lt-ghost leading-none uppercase tracking-tighter">
-						{brandLabel}
-						<br />
-						{footerLabel}
-					</div>
-				</div>
-				<span className="font-mono text-[11px] text-lt-ghost uppercase tracking-widest" />
 			</div>
 
 			<StripeFooter />
